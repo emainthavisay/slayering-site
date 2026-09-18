@@ -10,274 +10,174 @@
    ou modifie le champ `photo` ci-dessous.
    ============================================================= */
 const WIDE_COLORS = [
-  { id: "beige",        name: "Beige",        hexA: "#c9b89a", hexB: "#8a6b4a", photo: "assets/colors/beige.jpg" },
-  { id: "bleu",         name: "Bleu",         hexA: "#1f2b44", hexB: "#e9e4d8", photo: "assets/colors/bleu.jpg" },
-  { id: "bordeaux",     name: "Bordeaux",     hexA: "#2a2d3d", hexB: "#8a3d3d", photo: "assets/colors/bordeaux.jpg" },
-  { id: "dore",         name: "Doré",         hexA: "#9a9a9a", hexB: "#c79a5e", photo: "assets/colors/dore.jpg" },
-  { id: "faon",         name: "Faon",         hexA: "#8a6a4a", hexB: "#1f2b44", photo: "assets/colors/faon.jpg" },
-  { id: "fleur",        name: "Fleur",        hexA: "#1a1a2e", hexB: "#e9e4d8", photo: "assets/colors/fleur.jpg" },
-  { id: "leopard",      name: "Léopard",      hexA: "#8a6237", hexB: "#3d2b1a", photo: "assets/colors/leopard.jpg" },
-  { id: "marron-fonce", name: "Marron foncé", hexA: "#2a1f18", hexB: "#8a5a2a", photo: "assets/colors/marron-fonce.jpg" },
-  { id: "marron",       name: "Marron",       hexA: "#8a7a5a", hexB: "#c9a86a", photo: "assets/colors/marron.jpg" },
-  { id: "pois",         name: "Pois",         hexA: "#e9e4d8", hexB: "#c79a5e", photo: "assets/colors/pois.jpg" },
+  { id: "beige",        name: "Camel",          hexA: "#c9b89a", hexB: "#8a6b4a", photo: "assets/colors/beige.jpg" },
+  { id: "bleu",         name: "Midnight Navy",  hexA: "#1f2b44", hexB: "#e9e4d8", photo: "assets/colors/bleu.jpg" },
+  { id: "bordeaux",     name: "Wine",           hexA: "#2a2d3d", hexB: "#8a3d3d", photo: "assets/colors/bordeaux.jpg" },
+  { id: "dore",         name: "Champagne Gold", hexA: "#9a9a9a", hexB: "#c79a5e", photo: "assets/colors/dore.jpg" },
+  { id: "faon",         name: "Toffee",         hexA: "#8a6a4a", hexB: "#1f2b44", photo: "assets/colors/faon.jpg" },
+  { id: "fleur",        name: "Midnight Bloom", hexA: "#1a1a2e", hexB: "#e9e4d8", photo: "assets/colors/fleur.jpg" },
+  { id: "leopard",      name: "Wild Leopard",   hexA: "#8a6237", hexB: "#3d2b1a", photo: "assets/colors/leopard.jpg" },
+  { id: "marron-fonce", name: "Espresso",       hexA: "#2a1f18", hexB: "#8a5a2a", photo: "assets/colors/marron-fonce.jpg" },
+  { id: "marron",       name: "Chestnut",       hexA: "#8a7a5a", hexB: "#c9a86a", photo: "assets/colors/marron.jpg" },
+  { id: "pois",         name: "Ivory Dot",      hexA: "#e9e4d8", hexB: "#c79a5e", photo: "assets/colors/pois.jpg" },
 ];
 
-const PRODUCTS = [
-  {
-    id: "wide",
-    name: "Wide",
-    cutTag: "Coupe Wide",
-    dims: "110 × 110 cm",
-    kicker: "La plus présente.",
-    desc: "Plus de tissu, plus de présence. La ceinture foulard large qui accessoirise n'importe quelle tenue. 10 coloris.",
-    cardDesc: "Plus de tissu, plus de présence. La ceinture foulard large qui accessoirise n'importe quelle tenue. 10 coloris.",
-    basePrice: 24,
-    packs: [
-      { qty: 1, unit: 24 },
-      { qty: 2, unit: 22 },
-      { qty: 3, unit: 21 },
-      { qty: 4, unit: 20 },
-    ],
-    accentA: "#6b6339", accentB: "#b5573a",
-    photo: "assets/colors/dore.jpg",
-    colors: WIDE_COLORS,
-  },
-];
+const PRODUCT = {
+  id: "wide",
+  name: "Wide",
+  basePrice: 22,
+  // Tarif dégressif appliqué automatiquement selon la quantité TOTALE dans le panier
+  packs: [
+    { qty: 1, unit: 22 },
+    { qty: 2, unit: 20 },
+  ],
+  colors: WIDE_COLORS,
+};
 
 const REVIEWS = [
-  { name: "Léa M.",    meta: "Wide · Bleu",         rating: 5, quote: "Je la noue à la taille et la tenue change du tout au tout. Le coloris est magnifique." },
-  { name: "Camille R.",meta: "Pack 3 · Marron foncé", rating: 5, quote: "Reçu en trois jours. Je les enchaîne chaque semaine. Plus qu'un accessoire, vraiment." },
-  { name: "Inès B.",   meta: "Wide · Léopard",      rating: 4, quote: "Elle est parfaite pour un look simple. Le nœud ne bouge pas de la journée." },
-  { name: "Sofia L.",  meta: "Wide · Bordeaux",     rating: 5, quote: "La matière est superbe et le nouage tient toute la journée. Dix coloris, forcément le mien y était." },
-  { name: "Manon T.",  meta: "Wide · Beige",        rating: 2, quote: "Jolie sur les photos mais plus fine que ce à quoi je m'attendais pour ce prix." },
-  { name: "Zoé K.",    meta: "Wide · Pois",         rating: 5, quote: "Discrète et élégante. Je la porte au bureau comme le week-end." },
-  { name: "Alice P.",  meta: "Pack 2 · Doré",       rating: 4, quote: "Belle qualité de tissu, le seul bémol c'est que j'en veux déjà une troisième." },
-  { name: "Nadia F.",  meta: "Wide · Fleur",        rating: 1, quote: "Livrée avec une semaine de retard par rapport à ce qui était annoncé, dommage." },
-  { name: "Chloé D.",  meta: "Wide · Faon",         rating: 5, quote: "Nouée sur le sac pour une soirée, tout le monde m'a demandé où je l'avais trouvée." },
+  { name: "Léa M.",    meta: "Midnight Navy",  rating: 5, quote: "Je le noue à la taille et la tenue change du tout au tout. Le coloris est magnifique." },
+  { name: "Camille R.",meta: "Espresso",       rating: 5, quote: "Reçu en trois jours. Plus qu'un accessoire, vraiment." },
+  { name: "Inès B.",   meta: "Wild Leopard",   rating: 4, quote: "Parfait pour améliorer un look simple, je le porte au quotidien." },
+  { name: "Sofia L.",  meta: "Wine",           rating: 5, quote: "La matière est superbe et le nouage tient toute la journée." },
+  { name: "Manon T.",  meta: "Camel",          rating: 2, quote: "Je pensais que la couleur serait plus claire." },
+  { name: "Zoé K.",    meta: "Ivory Dot",      rating: 5, quote: "Discret et élégant, je le porte tout le temps." },
+  { name: "Alice P.",  meta: "Champagne Gold", rating: 4, quote: "Belle qualité de tissu, le seul bémol c'est que j'en veux déjà un autre..." },
+  { name: "Chloé D.",  meta: "Toffee",         rating: 5, quote: "Noué sur le sac pour une soirée, tout le monde m'a demandé où je l'avais trouvé." },
 ];
+
+/* =============================================================
+   PAIEMENT — Stripe Payment Links (2 liens, tarif dégressif)
+   --------------------------------
+   Deux liens Stripe séparés sont branchés ci-dessous :
+   - STRIPE_LINK_SOLO  → tarif "1 pièce" à 22 €
+   - STRIPE_LINK_PACK2 → tarif forfaitaire "2 pièces" à 40 € (= 20 €/pièce)
+   Chaque lien facture un prix FIXE — Stripe ne calcule pas de tarif
+   dégressif arbitraire pour un one-time payment. La redirection dans
+   le handler #checkoutBtn choisit le lien selon la quantité TOTALE du
+   panier : 1 pièce → lien solo, 2 pièces → lien pack. Au-delà de 2
+   pièces, il n'existe pas de lien Stripe qui calcule le bon montant
+   automatiquement (limite de la plateforme pour du paiement ponctuel
+   sans backend) — le client est prévenu et invité à finaliser en deux
+   commandes, ou à contacter directement contact@slayering.com.
+   Pour créer/modifier un lien : dashboard Stripe → Catalogue de
+   produits → tarif concerné → "..." → "Créer un lien de paiement".
+   Pense à cocher "Collecter les adresses des clients" (produit
+   physique à expédier) et à limiter les pays de livraison à l'UE.
+   ============================================================= */
+/* =============================================================
+   FORMULAIRE DE CONTACT — Formspree
+   --------------------------------
+   1. Crée un compte gratuit sur https://formspree.io
+   2. "+ New Form" → donne-lui un nom (ex: "Contact Slayering")
+   3. Dans les réglages du formulaire, indique l'adresse qui doit
+      recevoir les messages : ema@inthavisay.fr (Formspree envoie un
+      email de confirmation à valider une fois).
+   4. Copie l'URL du formulaire (ex: https://formspree.io/f/xxxxabcd)
+      et colle-la ci-dessous.
+   Tant que ce champ est vide, le bouton "Envoyer" ouvre directement
+   un email pré-rempli vers contact@slayering.com à la place — le
+   formulaire reste utilisable, juste moins fluide.
+   ============================================================= */
+const FORMSPREE_ENDPOINT = ""; // ex: "https://formspree.io/f/xxxxabcd"
+
+/* =============================================================
+   ANALYTICS — Google Tag Manager (chargé uniquement après consentement)
+   --------------------------------
+   Conteneur GTM de www.slayering.com. Pour changer de conteneur,
+   remplace simplement l'identifiant ci-dessous.
+   Tant que ce champ est vide, rien n'est chargé, même si la cliente
+   accepte les cookies dans le bandeau — le site reste fonctionnel et
+   ne fait aucun tracking par défaut.
+   ============================================================= */
+const GTM_CONTAINER_ID = "GTM-WFT6JKG5";
+
+// Deux liens Stripe distincts (un tarif fixe par lien, ils ne s'ajustent pas
+// automatiquement à une quantité arbitraire — voir logique de redirection
+// dans le handler #checkoutBtn plus bas).
+const STRIPE_LINK_SOLO = "https://buy.stripe.com/fZu5kFb9h5TPgv1br4ds401"; // 1 pièce — 22 €
+const STRIPE_LINK_PACK2 = "https://buy.stripe.com/7sY00lfpxbe9fqX1Quds402"; // 2 pièces — 40 € (forfait)
 
 /* =============================================================
    State
    ============================================================= */
 const state = {
-  cart: [],
-  modal: { productId: null, colorId: null, packQty: 1 },
+  cart: [],           // [{ colorId, colorName, photo, qty }]
+  selectedColorId: WIDE_COLORS[0].id,
   reviewIndex: 0,
 };
 
 const money = (n) => `${n.toLocaleString("fr-FR")}\u00A0€`;
 const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
+function currentColor(){
+  return PRODUCT.colors.find(c => c.id === state.selectedColorId);
+}
+
 /* =============================================================
-   Collection showcase (photo + bouton "Découvrir")
-   Dépose une photo dans assets/showcase.jpg puis renseigne
-   SHOWCASE_PHOTO ci-dessous pour l'afficher automatiquement.
+   Product (inline, no modal)
    ============================================================= */
-const SHOWCASE_PHOTO = "assets/showcase.jpg";
-
-function initCollectionShowcase(){
-  const photoEl = document.getElementById("showcasePhoto");
-  const btn = document.getElementById("discoverColorsBtn");
-  if (!photoEl || !btn) return;
-
-  if (SHOWCASE_PHOTO){
-    photoEl.style.backgroundImage = `url('${SHOWCASE_PHOTO}')`;
-    const placeholder = photoEl.querySelector(".showcase-photo__placeholder");
-    if (placeholder) placeholder.remove();
+// Changement de photo produit : petit flou + fondu (au lieu d'un cut
+// instantané), la même transition à chaque fois quel que soit le coloris.
+function setProductPhoto(media, photo, animate){
+  if (!animate || prefersReducedMotion){
+    media.style.backgroundImage = `url('${photo}')`;
+    return;
   }
-
-  btn.addEventListener("click", () => openModal("wide"));
+  media.classList.add("is-switching");
+  setTimeout(() => {
+    media.style.backgroundImage = `url('${photo}')`;
+    media.classList.remove("is-switching");
+  }, 180);
 }
 
-/* =============================================================
-   Render: reviews
-   ============================================================= */
-function stars(rating){
-  return Array.from({length:5}, (_,i) => i < rating ? "★" : `<span class="off">★</span>`).join("");
-}
+function renderProductInline(animate){
+  const media = document.getElementById("productMedia");
+  const colorNameEl = document.getElementById("productColorName");
+  const swatchGrid = document.getElementById("swatchGrid");
+  const priceEl = document.getElementById("priceAmount");
+  if (!media || !swatchGrid) return;
 
-function renderReviews(){
-  const track = document.getElementById("reviewsTrack");
-  track.innerHTML = REVIEWS.map(r => `
-    <article class="review-card">
-      <div class="review-card__stars">
-        <span class="stars">${stars(r.rating)}</span>
-      </div>
-      <p class="review-card__quote">« ${r.quote} »</p>
-      <div class="review-card__who">
-        <strong>${r.name}</strong>
-        <span>${r.meta}</span>
-      </div>
-    </article>
-  `).join("");
+  const color = currentColor();
+  setProductPhoto(media, color.photo, animate);
+  colorNameEl.textContent = color.name;
+  priceEl.innerHTML = money(PRODUCT.basePrice);
+  media.setAttribute("aria-label", `Photo de la ceinture foulard Wide, coloris ${color.name}`);
 
-  state.reviewIndex = 0;
-  updateReviewsView();
-
-  document.getElementById("reviewsPrev").onclick = () => {
-    state.reviewIndex = Math.max(0, state.reviewIndex - 1);
-    updateReviewsView();
-  };
-  document.getElementById("reviewsNext").onclick = () => {
-    const perPage = window.innerWidth <= 600 ? 1 : window.innerWidth <= 960 ? 2 : 4;
-    const maxIndex = Math.max(0, REVIEWS.length - perPage);
-    state.reviewIndex = Math.min(maxIndex, state.reviewIndex + 1);
-    updateReviewsView();
-  };
-}
-
-function updateReviewsView(){
-  const track = document.getElementById("reviewsTrack");
-  const cardWidth = track.firstElementChild.getBoundingClientRect().width;
-  const gap = 22.4;
-  const offset = state.reviewIndex * (cardWidth + gap);
-  track.style.transform = `translateX(-${offset}px)`;
-}
-
-/* =============================================================
-   Modal
-   ============================================================= */
-function swatchSvg(color){
-  return `
-  <svg viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice">
-    <defs>
-      <linearGradient id="mg" x1="0" y1="0" x2="1" y2="1">
-        <stop offset="0%" stop-color="${color.hexA}"/>
-        <stop offset="100%" stop-color="${color.hexB}"/>
-      </linearGradient>
-    </defs>
-    <rect width="400" height="500" fill="#0f0e0c"/>
-    <path d="M110 55 C82 55 70 95 70 125 C70 160 92 180 100 208 L64 232 C40 248 26 276 26 314 L26 500 L374 500 L374 314 C374 276 360 248 336 232 L300 208 C308 180 330 160 330 125 C330 95 318 55 290 55 C 262 36 138 36 110 55 Z" fill="#1c1915"/>
-    <path d="M30 300 C150 268 250 268 370 300 L370 360 C250 330 150 330 30 360 Z" fill="url(#mg)"/>
-    <path d="M300 330 C 350 360 380 410 360 460" stroke="url(#mg)" stroke-width="26" fill="none" stroke-linecap="round"/>
-    <path d="M96 335 C 55 360 35 405 55 450" stroke="url(#mg)" stroke-width="22" fill="none" stroke-linecap="round" opacity=".9"/>
-  </svg>`;
-}
-
-function currentProduct(){ return PRODUCTS.find(p => p.id === state.modal.productId); }
-function currentColor(){ return currentProduct().colors.find(c => c.id === state.modal.colorId); }
-function currentPack(){
-  const p = currentProduct();
-  return p.packs.find(pk => pk.qty === state.modal.packQty);
-}
-
-function openModal(productId){
-  const product = PRODUCTS.find(p => p.id === productId);
-  state.modal.productId = productId;
-  state.modal.colorId = product.colors[0].id;
-  state.modal.packQty = 1;
-
-  document.getElementById("modalCutTag").textContent = product.cutTag;
-  document.getElementById("modalMeta").textContent = `${product.cutTag} — ${product.dims}`;
-  document.getElementById("modalTitle").textContent = product.name;
-  document.getElementById("modalKicker").textContent = product.kicker;
-  document.getElementById("modalDesc").textContent = product.desc;
-
-  document.getElementById("swatchGrid").innerHTML = product.colors.map(c => `
-    <span class="swatch" data-color="${c.id}" title="${c.name}">
-      <span class="swatch__fill" style="${c.photo ? `background-image:url('${c.photo}');background-size:cover;background-position:center 62%;` : `background:linear-gradient(135deg, ${c.hexA}, ${c.hexB})`}"></span>
+  swatchGrid.innerHTML = PRODUCT.colors.map(c => `
+    <span class="swatch" data-color="${c.id}" role="button" tabindex="0"
+      aria-label="Coloris ${c.name}" aria-pressed="${c.id === state.selectedColorId}" title="${c.name}">
+      <span class="swatch__fill" style="background:${c.hexA};"></span>
     </span>
   `).join("");
-  document.getElementById("swatchGrid").querySelectorAll(".swatch").forEach(el => {
-    el.addEventListener("click", () => {
-      state.modal.colorId = el.dataset.color;
-      updateModalView();
+  swatchGrid.querySelectorAll(".swatch").forEach(el => {
+    el.classList.toggle("is-active", el.dataset.color === state.selectedColorId);
+    const select = () => {
+      if (el.dataset.color === state.selectedColorId) return;
+      state.selectedColorId = el.dataset.color;
+      renderProductInline(true);
+      swatchGrid.querySelector(`[data-color="${state.selectedColorId}"]`)?.focus();
+    };
+    el.addEventListener("click", select);
+    el.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " "){
+        e.preventDefault();
+        select();
+      }
     });
   });
 
-  document.getElementById("packTabs").innerHTML = product.packs.map(pk => `
-    <button type="button" data-qty="${pk.qty}">${pk.qty} pc${pk.qty > 1 ? "s" : ""}</button>
-  `).join("");
-  document.getElementById("packTabs").querySelectorAll("button").forEach(btn => {
-    btn.addEventListener("click", () => {
-      state.modal.packQty = Number(btn.dataset.qty);
-      updateModalView();
-    });
-  });
-
-  document.getElementById("shuffleColor").onclick = () => {
-    const others = product.colors.filter(c => c.id !== state.modal.colorId);
-    state.modal.colorId = others[Math.floor(Math.random() * others.length)].id;
-    updateModalView();
-  };
-
-  document.getElementById("addToCartBtn").onclick = addCurrentToCart;
-
-  updateModalView();
-
-  const modal = document.getElementById("productModal");
-  modal.classList.add("is-open");
-  modal.setAttribute("aria-hidden", "false");
-  document.body.style.overflow = "hidden";
+  document.getElementById("addToCartBtn").onclick = addSelectedToCart;
 }
 
-function updateModalView(){
+function addSelectedToCart(){
   const color = currentColor();
-  const pack = currentPack();
-
-  const preview = document.getElementById("modalSwatchPreview");
-  preview.style.opacity = 0;
-  setTimeout(() => {
-    preview.innerHTML = color.photo
-      ? `<img src="${color.photo}" alt="${currentProduct().name} — ${color.name}" style="width:100%;height:100%;object-fit:cover;">`
-      : swatchSvg(color);
-    preview.style.opacity = 1;
-  }, prefersReducedMotion ? 0 : 140);
-
-  document.getElementById("modalColorName").textContent = color.name;
-
-  document.querySelectorAll("#swatchGrid .swatch").forEach(el => {
-    el.classList.toggle("is-active", el.dataset.color === color.id);
-  });
-  document.querySelectorAll("#packTabs button").forEach(btn => {
-    btn.classList.toggle("is-active", Number(btn.dataset.qty) === pack.qty);
-  });
-
-  const total = pack.qty * pack.unit;
-  document.getElementById("priceMeta").textContent =
-    pack.qty === 1 ? "1 pièce" : `${pack.qty} pièces — ${pack.unit}\u00A0€/pièce`;
-  document.getElementById("priceAmount").innerHTML = money(total);
-
-  document.getElementById("addToCartBtn").innerHTML =
-    pack.qty === 1
-      ? `Ajouter au panier <span aria-hidden="true">+</span>`
-      : `Ajouter le pack ${pack.qty} <span aria-hidden="true">+</span>`;
-}
-
-function closeModal(){
-  const modal = document.getElementById("productModal");
-  modal.classList.remove("is-open");
-  modal.setAttribute("aria-hidden", "true");
-  document.body.style.overflow = "";
-}
-
-function addCurrentToCart(){
-  const product = currentProduct();
-  const color = currentColor();
-  const pack = currentPack();
-  const total = pack.qty * pack.unit;
-
-  state.cart.push({
-    id: `${Date.now()}-${Math.random().toString(36).slice(2,7)}`,
-    productId: product.id,
-    productName: product.name,
-    colorId: color.id,
-    colorName: color.name,
-    hexA: color.hexA,
-    hexB: color.hexB,
-    photo: color.photo,
-    qty: pack.qty,
-    unit: pack.unit,
-    total,
-  });
+  const existing = state.cart.find(i => i.colorId === color.id);
+  if (existing) existing.qty += 1;
+  else state.cart.push({ colorId: color.id, colorName: color.name, photo: color.photo, qty: 1 });
 
   renderCart();
   pulseCartIcon();
-  showToast(
-    "Ajouté — " + (pack.qty > 1 ? `Pack ${pack.qty} · ` : "") + `${product.name} · ${color.name}`,
-    `${money(total)} — dans ton panier.`
-  );
-  closeModal();
+  showToast(`Ajouté — Wide · ${color.name}`, "Dans ton panier.");
 }
 
 function pulseCartIcon(){
@@ -289,23 +189,73 @@ function pulseCartIcon(){
 }
 
 /* =============================================================
-   Cart
+   Cart — tarif dégressif automatique selon la quantité totale
    ============================================================= */
+function totalQty(){
+  return state.cart.reduce((n, item) => n + item.qty, 0);
+}
+
+// Tarification par COMBINAISON, pas par palier uniforme :
+// on décompose la quantité totale en autant de packs de 2 que possible
+// (tarif "Pack x2"), plus un éventuel reste de 1 pièce au tarif solo.
+// Ex : 1 → 22€ · 2 → 40€ · 3 → 40+22=62€ · 4 → 40+40=80€ · 5 → 40+40+22=102€
+function packBreakdown(qty){
+  const soloUnit = (PRODUCT.packs.find(p => p.qty === 1) || {}).unit ?? PRODUCT.basePrice;
+  const packTier = PRODUCT.packs.find(p => p.qty === 2);
+  const packUnit = packTier ? packTier.unit * 2 : soloUnit * 2; // prix total du pack (ex: 40€)
+  const packs = Math.floor(qty / 2);
+  const remainder = qty % 2;
+  return { packs, packUnit, remainder, soloUnit };
+}
+
 function cartTotal(){
-  return state.cart.reduce((sum, item) => sum + item.total, 0);
+  const qty = totalQty();
+  const { packs, packUnit, remainder, soloUnit } = packBreakdown(qty);
+  return packs * packUnit + remainder * soloUnit;
+}
+
+// Prix (remisé) d'une tranche de `qty` pièces démarrant à la position
+// `precedingQty` dans l'ordre global du panier. Comme les packs de 2 se
+// forment sur la quantité TOTALE (tous coloris confondus), chaque article
+// du panier doit être facturé selon la position de ses pièces dans cette
+// numérotation globale, pas selon son propre sous-total isolé.
+function itemDiscountedTotal(qty, precedingQty){
+  const { packs, packUnit, soloUnit } = packBreakdown(totalQty());
+  const packUnitEach = packUnit / 2;
+  let sum = 0;
+  for (let i = precedingQty; i < precedingQty + qty; i++){
+    sum += (i < packs * 2) ? packUnitEach : soloUnit;
+  }
+  return sum;
 }
 
 function renderCart(){
-  const count = state.cart.reduce((n, item) => n + item.qty, 0);
+  const qty = totalQty();
+  const { packs, packUnit, remainder, soloUnit } = packBreakdown(qty);
   const total = cartTotal();
+  const fullPrice = qty * PRODUCT.basePrice;
 
-  document.getElementById("cartCount").textContent = count;
-  document.getElementById("cartTotal").textContent = total.toLocaleString("fr-FR");
-  document.getElementById("cartDrawerTotal").innerHTML = money(total);
+  document.getElementById("cartCount") && (document.getElementById("cartCount").textContent = qty);
+  const totalEl = document.getElementById("cartDrawerTotal");
+  if (total < fullPrice && qty > 0){
+    totalEl.innerHTML = `<s class="cart-item__was">${money(fullPrice)}</s> ${money(total)}`;
+  } else {
+    totalEl.innerHTML = money(total);
+  }
 
   const badge = document.getElementById("cartBadge");
-  badge.textContent = count;
-  badge.hidden = count === 0;
+  badge.textContent = qty;
+  badge.hidden = qty === 0;
+
+  const packNote = document.getElementById("cartPackNote");
+  if (qty >= 2){
+    const parts = [];
+    if (packs > 0) parts.push(`${packs}\u00A0pack${packs > 1 ? "s" : ""} de 2 (${money(packUnit)} chacun)`);
+    if (remainder > 0) parts.push(`1\u00A0pièce solo (${money(soloUnit)})`);
+    packNote.textContent = `Tarif appliqué automatiquement : ${parts.join(" + ")}.`;
+  } else {
+    packNote.textContent = "";
+  }
 
   const itemsWrap = document.getElementById("cartItems");
   const emptyMsg = document.getElementById("cartEmpty");
@@ -315,21 +265,32 @@ function renderCart(){
     emptyMsg.style.display = "block";
   } else {
     emptyMsg.style.display = "none";
-    itemsWrap.innerHTML = state.cart.map(item => `
+    let preceding = 0;
+    itemsWrap.innerHTML = state.cart.map(item => {
+      const itemFull = item.qty * PRODUCT.basePrice;
+      const itemDiscounted = itemDiscountedTotal(item.qty, preceding);
+      preceding += item.qty;
+      const priceHtml = itemDiscounted < itemFull
+        ? `<s class="cart-item__was">${money(itemFull)}</s> ${money(itemDiscounted)}`
+        : money(itemDiscounted);
+      return `
       <div class="cart-item">
-        <span class="cart-item__swatch" style="${item.photo ? `background-image:url('${item.photo}');background-size:cover;background-position:center 62%;` : `background:linear-gradient(135deg, ${item.hexA}, ${item.hexB})`}"></span>
+        <span class="cart-item__swatch" style="background-image:url('${item.photo}');background-size:cover;background-position:center 62%;"></span>
         <span>
-          <p class="cart-item__name">${item.productName} — ${item.colorName}</p>
-          <span class="cart-item__meta">${item.qty} pc${item.qty > 1 ? "s" : ""} · ${item.unit}\u00A0€/pc</span><br>
-          <button type="button" class="cart-item__remove" data-remove="${item.id}">Retirer</button>
+          <p class="cart-item__name">Wide — ${item.colorName}</p>
+          <span class="cart-item__meta">${item.qty} pc${item.qty > 1 ? "s" : ""}</span><br>
+          <button type="button" class="cart-item__remove" data-remove="${item.colorId}">Retirer</button>
         </span>
-        <span class="cart-item__price">${money(item.total)}</span>
+        <span class="cart-item__price">
+          ${priceHtml}
+        </span>
       </div>
-    `).join("");
+    `;
+    }).join("");
 
     itemsWrap.querySelectorAll("[data-remove]").forEach(btn => {
       btn.addEventListener("click", () => {
-        state.cart = state.cart.filter(i => i.id !== btn.dataset.remove);
+        state.cart = state.cart.filter(i => i.colorId !== btn.dataset.remove);
         renderCart();
       });
     });
@@ -369,6 +330,74 @@ function hideToast(){
 }
 
 /* =============================================================
+   Render: reviews (défilement en boucle infinie)
+   ============================================================= */
+function stars(rating){
+  return Array.from({length:5}, (_,i) => i < rating ? "★" : `<span class="off">★</span>`).join("");
+}
+
+// Boucle vraiment infinie : la piste contient 3 copies bout à bout des
+// avis (A, B, C). On démarre au début de la copie B, et chaque clic
+// avance/recule d'une carte, sans jamais revenir visuellement en arrière.
+// Quand l'index sort de la copie centrale, on le rebase instantanément
+// (transition coupée le temps d'un frame) vers la position équivalente
+// dans B — invisible pour l'œil puisque B/A/C sont identiques.
+function renderReviews(){
+  const track = document.getElementById("reviewsTrack");
+  const cardHTML = (r) => `
+    <article class="review-card">
+      <div class="review-card__stars">
+        <span class="stars">${stars(r.rating)}</span>
+      </div>
+      <p class="review-card__quote">« ${r.quote} »</p>
+      <div class="review-card__who">
+        <strong>${r.name}</strong>
+        <span>${r.meta}</span>
+      </div>
+    </article>
+  `;
+  const loop = [...REVIEWS, ...REVIEWS, ...REVIEWS];
+  track.innerHTML = loop.map(cardHTML).join("");
+
+  state.reviewIndex = REVIEWS.length;
+  updateReviewsView(false);
+
+  document.getElementById("reviewsPrev").onclick = () => {
+    state.reviewIndex -= 1;
+    updateReviewsView(true);
+  };
+  document.getElementById("reviewsNext").onclick = () => {
+    state.reviewIndex += 1;
+    updateReviewsView(true);
+  };
+}
+
+function updateReviewsView(animate){
+  const track = document.getElementById("reviewsTrack");
+  const cardWidth = track.firstElementChild.getBoundingClientRect().width;
+  const gap = 22.4;
+
+  track.style.transition = animate ? "" : "none";
+  if (!animate) track.offsetHeight; // force un reflow pour que "none" s'applique avant le transform
+  const offset = state.reviewIndex * (cardWidth + gap);
+  track.style.transform = `translateX(-${offset}px)`;
+
+  if (animate){
+    track.addEventListener("transitionend", function rebase(){
+      track.removeEventListener("transitionend", rebase);
+      const n = REVIEWS.length;
+      if (state.reviewIndex >= n * 2){
+        state.reviewIndex -= n;
+        updateReviewsView(false);
+      } else if (state.reviewIndex < n){
+        state.reviewIndex += n;
+        updateReviewsView(false);
+      }
+    }, { once:true });
+  }
+}
+
+/* =============================================================
    Scroll effects: progress bar, reveal-on-scroll, title scramble
    ============================================================= */
 function initScrollEffects(){
@@ -396,7 +425,6 @@ function initScrollEffects(){
 
   document.querySelectorAll(".reveal, .reveal-stagger").forEach(el => observer.observe(el));
 
-  // animated counters on the stat grid
   const statCells = document.querySelectorAll(".stat-grid dd");
   const counterObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
@@ -409,13 +437,12 @@ function initScrollEffects(){
   statCells.forEach(el => counterObserver.observe(el));
 }
 
-/* Text-scramble / decode reveal effect for headings */
+/* Text-scramble / decode reveal — uniquement sur les 4 titres marqués data-scramble */
 const SCRAMBLE_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 function scrambleReveal(el){
   if (el.dataset.scrambled) return;
   el.dataset.scrambled = "1";
-
-  if (prefersReducedMotion) return; // keep the static final text as-is
+  if (prefersReducedMotion) return;
 
   const finalHTML = el.innerHTML;
   const finalText = finalHTML.replace(/<br\s*\/?>/gi, "\n");
@@ -458,172 +485,94 @@ function animateCount(el){
 }
 
 /* =============================================================
-   Stars divider (between Concept and Collection)
+   Ambient floating stars (fond, section Collection)
    ============================================================= */
 function starSvg(size){
   return `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0l2.6 8.4L23 12l-8.4 2.6L12 24l-2.6-8.4L1 12l8.4-2.6z"/></svg>`;
 }
 
-function initStarsDivider(){
-  const el = document.getElementById("starsDivider");
+function initStarsAmbient(){
+  const el = document.getElementById("starsAmbient");
   if (!el) return;
-  const COUNT = 16;
+  const COUNT = 22;
   let html = "";
   for (let i = 0; i < COUNT; i++){
-    const left = 2 + Math.random() * 96;
-    const top = 12 + Math.random() * 60;
+    const left = Math.random() * 100;
+    const top = Math.random() * 100;
     const size = 5 + Math.random() * 9;
     const d1 = (Math.random() * 5).toFixed(2);
     const d2 = (Math.random() * 3.4).toFixed(2);
-    html += `<span class="stars-divider__star" style="left:${left}%; top:${top}%; animation-delay:${d1}s, ${d2}s;">${starSvg(size)}</span>`;
+    html += `<span class="stars-ambient__star" style="left:${left}%; top:${top}%; animation-delay:${d1}s, ${d2}s;">${starSvg(size)}</span>`;
   }
   el.innerHTML = html;
 }
 
 /* =============================================================
-   Magnetic buttons
+   Boutons : hover uniforme (voir .btn:hover en CSS), plus d'effet
+   "magnétique" qui suivait la position de la souris — tous les
+   boutons du site poussent maintenant de la même façon, fixe.
    ============================================================= */
 function initMagnetic(){
-  if (prefersReducedMotion) return;
-  document.querySelectorAll(".btn--solid, .btn--outline").forEach(btn => {
-    btn.classList.add("magnetic");
-    btn.addEventListener("mousemove", (e) => {
-      const rect = btn.getBoundingClientRect();
-      const x = e.clientX - rect.left - rect.width / 2;
-      const y = e.clientY - rect.top - rect.height / 2;
-      btn.style.transform = `translate(${x * 0.18}px, ${y * 0.35}px)`;
-    });
-    btn.addEventListener("mouseleave", () => { btn.style.transform = "translate(0,0)"; });
-  });
+  // Volontairement vide : conservé pour ne pas casser l'appel dans
+  // l'init ci-dessous. L'animation de survol vient uniquement de
+  // .btn:hover (scale + translateY) dans styles.css.
 }
 
 /* =============================================================
-   Hero: load-in reveal + water-ripple effect on the photo
+   Global cursor halo + click ripple
+   ============================================================= */
+function initCursorFX(){
+  const halo = document.getElementById("cursorHalo");
+  if (halo && !prefersReducedMotion){
+    let active = false;
+    window.addEventListener("mousemove", (e) => {
+      halo.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
+      if (!active){ halo.classList.add("is-active"); active = true; }
+    }, { passive: true });
+    document.addEventListener("mouseleave", () => halo.classList.remove("is-active"));
+  }
+
+  if (!prefersReducedMotion){
+    document.addEventListener("click", (e) => {
+      const r = document.createElement("span");
+      r.className = "click-ripple";
+      r.style.left = `${e.clientX}px`;
+      r.style.top = `${e.clientY}px`;
+      document.body.appendChild(r);
+      setTimeout(() => r.remove(), 650);
+    });
+  }
+}
+
+/* =============================================================
+   Hero: load-in reveal
    ============================================================= */
 function initHero(){
   const hero = document.getElementById("hero");
   if (!hero) return;
   requestAnimationFrame(() => hero.classList.add("is-ready"));
-  initHeroRipple();
-}
-
-function initHeroRipple(){
-  const canvas = document.getElementById("heroCanvas");
-  const frame = document.getElementById("heroFrame");
-  if (!canvas || !frame) return;
-  const ctx = canvas.getContext("2d");
-
-  const GRID_X = 34, GRID_Y = 42;
-  let ripples = [];
-  let imgReady = false;
-
-  const img = new Image();
-  img.src = "assets/hero.jpg";
-  img.onload = () => { imgReady = true; resize(); };
-
-  function resize(){
-    const rect = frame.getBoundingClientRect();
-    const dpr = Math.min(window.devicePixelRatio || 1, 2);
-    canvas.width = Math.max(1, Math.round(rect.width * dpr));
-    canvas.height = Math.max(1, Math.round(rect.height * dpr));
-  }
-  window.addEventListener("resize", resize);
-
-  function addRipple(clientX, clientY){
-    const rect = canvas.getBoundingClientRect();
-    const x = (clientX - rect.left) / rect.width;
-    const y = (clientY - rect.top) / rect.height;
-    if (x < 0 || x > 1 || y < 0 || y > 1) return;
-    ripples.push({ x, y, t: performance.now() });
-    if (ripples.length > 10) ripples.shift();
-  }
-
-  let lastMove = 0;
-  canvas.addEventListener("mousemove", (e) => {
-    const now = performance.now();
-    if (now - lastMove < 40) return;
-    lastMove = now;
-    addRipple(e.clientX, e.clientY);
-  });
-  canvas.addEventListener("touchmove", (e) => {
-    const t = e.touches[0];
-    if (t) addRipple(t.clientX, t.clientY);
-  }, { passive: true });
-
-  function draw(now){
-    requestAnimationFrame(draw);
-    if (!imgReady) return;
-    const w = canvas.width, h = canvas.height;
-    if (w === 0 || h === 0) return;
-
-    ripples = ripples.filter(r => now - r.t < 1500);
-
-    if (prefersReducedMotion || ripples.length === 0){
-      ctx.clearRect(0, 0, w, h);
-      ctx.drawImage(img, 0, 0, w, h);
-      return;
-    }
-
-    const iw = img.naturalWidth, ih = img.naturalHeight;
-    const cellW = w / GRID_X, cellH = h / GRID_Y;
-    const srcCellW = iw / GRID_X, srcCellH = ih / GRID_Y;
-    const aspect = h / w;
-
-    ctx.clearRect(0, 0, w, h);
-    for (let gy = 0; gy < GRID_Y; gy++){
-      const cy = (gy + 0.5) / GRID_Y;
-      for (let gx = 0; gx < GRID_X; gx++){
-        const cx = (gx + 0.5) / GRID_X;
-        let dx = 0, dy = 0;
-        for (const r of ripples){
-          const age = (now - r.t) / 1000;
-          const ddx = cx - r.x, ddy = (cy - r.y) * aspect;
-          const dist = Math.hypot(ddx, ddy);
-          const wave = Math.sin(dist * 46 - age * 16) * Math.exp(-dist * 6.5) * Math.exp(-age * 1.8) * 0.05;
-          const ang = Math.atan2(ddy, ddx);
-          dx += Math.cos(ang) * wave;
-          dy += Math.sin(ang) * wave;
-        }
-        const sampleU = Math.min(Math.max(cx + dx, 0), 1);
-        const sampleV = Math.min(Math.max(cy + dy, 0), 1);
-        const sx = Math.min(Math.max(sampleU * iw - srcCellW / 2, 0), iw - srcCellW);
-        const sy = Math.min(Math.max(sampleV * ih - srcCellH / 2, 0), ih - srcCellH);
-        ctx.drawImage(
-          img,
-          sx, sy, srcCellW, srcCellH,
-          gx * cellW, gy * cellH, cellW + 1, cellH + 1
-        );
-      }
-    }
-  }
-  requestAnimationFrame(draw);
 }
 
 /* =============================================================
    Init
    ============================================================= */
 document.addEventListener("DOMContentLoaded", () => {
-  initCollectionShowcase();
+  renderProductInline();
   renderReviews();
   renderCart();
   initScrollEffects();
   initMagnetic();
   initHero();
-  initStarsDivider();
+  initStarsAmbient();
+  initCursorFX();
 
   document.getElementById("year").textContent = new Date().getFullYear();
 
-  document.querySelectorAll("[data-close]").forEach(el => el.addEventListener("click", (e) => {
-    e.preventDefault();
-    closeModal();
-  }));
   document.querySelectorAll("[data-cart-close]").forEach(el => el.addEventListener("click", closeCart));
-
-  document.getElementById("openCartBtn").addEventListener("click", openCart);
   document.getElementById("openCartBtn2").addEventListener("click", openCart);
 
   document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape"){ closeModal(); closeCart(); }
+    if (e.key === "Escape") closeCart();
   });
 
   window.addEventListener("resize", () => {
@@ -632,14 +581,168 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   const form = document.getElementById("contactForm");
-  form.addEventListener("submit", (e) => {
-    e.preventDefault();
-    document.getElementById("formNote").hidden = false;
-    form.reset();
+  const formLoadedAt = Date.now();
+
+  function setFieldError(name, show){
+    const input = form.elements[name];
+    const errorEl = form.querySelector(`[data-error-for="${name}"]`);
+    const field = input?.closest(".field");
+    if (!input || !errorEl || !field) return;
+    field.classList.toggle("is-invalid", show);
+    errorEl.hidden = !show;
+  }
+
+  function validateForm(){
+    let valid = true;
+    ["firstname", "email", "message"].forEach((name) => {
+      const input = form.elements[name];
+      const ok = input.checkValidity();
+      setFieldError(name, !ok);
+      if (!ok) valid = false;
+    });
+    return valid;
+  }
+
+  // Efface l'erreur dès que le champ redevient valide
+  ["firstname", "email", "message"].forEach((name) => {
+    form.elements[name]?.addEventListener("input", () => {
+      if (form.elements[name].checkValidity()) setFieldError(name, false);
+    });
   });
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    if (!validateForm()) return;
+
+    // Anti-spam : champ honeypot rempli, ou envoi en moins de 2s après le
+    // chargement de la page → très probablement un robot, on ignore en silence.
+    const honeypot = form.elements["website"]?.value;
+    const tooFast = Date.now() - formLoadedAt < 2000;
+    if (honeypot || tooFast){
+      document.getElementById("formNote").hidden = false;
+      form.reset();
+      return;
+    }
+
+    const data = new FormData(form);
+    const firstname = data.get("firstname");
+    const email = data.get("email");
+    const message = data.get("message");
+
+    if (FORMSPREE_ENDPOINT){
+      try {
+        const res = await fetch(FORMSPREE_ENDPOINT, {
+          method: "POST",
+          headers: { "Accept": "application/json" },
+          body: data,
+        });
+        if (res.ok){
+          document.getElementById("formNote").hidden = false;
+          form.reset();
+        } else {
+          showToast("Erreur d'envoi", "Le message n'a pas pu partir, réessaie dans un instant.");
+        }
+      } catch (err) {
+        showToast("Erreur d'envoi", "Vérifie ta connexion et réessaie.");
+      }
+    } else {
+      const subject = encodeURIComponent(`Message de ${firstname} via slayering.com`);
+      const body = encodeURIComponent(`${message}\n\n— ${firstname} (${email})`);
+      window.location.href = `mailto:contact@slayering.com?subject=${subject}&body=${body}`;
+      document.getElementById("formNote").hidden = false;
+      form.reset();
+    }
+  });
+
+  // Construit "Camel x1, Midnight Navy x2" à partir du panier — tronqué à
+  // 200 caractères, limite du champ client_reference_id chez Stripe.
+  function cartReferenceId(){
+    const label = state.cart.map(item => `${item.colorName} x${item.qty}`).join(", ");
+    return label.slice(0, 200);
+  }
+
+  function withClientReference(stripeUrl, refId){
+    if (!refId) return stripeUrl;
+    const sep = stripeUrl.includes("?") ? "&" : "?";
+    return `${stripeUrl}${sep}client_reference_id=${encodeURIComponent(refId)}`;
+  }
 
   document.getElementById("checkoutBtn").addEventListener("click", () => {
     if (state.cart.length === 0) return;
-    showToast("Commande", "Branche un moyen de paiement (Stripe, PayPal…) pour finaliser ce flux.");
+    const qty = totalQty();
+
+    if (!STRIPE_LINK_SOLO || !STRIPE_LINK_PACK2){
+      showToast("Paiement à configurer", "Ajoute tes liens Stripe dans script.js (constantes STRIPE_LINK_SOLO / STRIPE_LINK_PACK2).");
+      return;
+    }
+
+    // Le coloris n'est pas un champ que Stripe peut facturer différemment
+    // (même prix quel que soit le coloris), donc il n'y a pas de "produit
+    // Stripe" par coloris. Mais Stripe Payment Links accepte un paramètre
+    // ?client_reference_id=... qui est reporté tel quel sur le paiement
+    // dans le dashboard Stripe (et dans l'email de notification) : on s'en
+    // sert pour transmettre automatiquement le(s) coloris + quantité choisis,
+    // sans backend. Ema les verra directement sur le paiement à préparer.
+    const refId = cartReferenceId();
+
+    if (qty === 1){
+      window.location.href = withClientReference(STRIPE_LINK_SOLO, refId);
+    } else if (qty === 2){
+      window.location.href = withClientReference(STRIPE_LINK_PACK2, refId);
+    } else {
+      // Au-delà de 2 pièces : chaque lien Stripe est un tarif fixe pour
+      // une quantité fixe, donc une seule page de paiement ne peut pas
+      // couvrir une combinaison. On explique clairement au client quoi
+      // régler, dans quel ordre, plutôt que de le laisser deviner.
+      const { packs, packUnit, remainder, soloUnit } = packBreakdown(qty);
+      const steps = [];
+      if (packs > 0) steps.push(`${packs} paiement${packs > 1 ? "s" : ""} "Pack x2" (${money(packUnit)} chacun)`);
+      if (remainder > 0) steps.push(`1 paiement "Article seul" (${money(soloUnit)})`);
+      showToast(
+        `${qty} pièces = ${steps.join(" + ")}`,
+        "Le paiement en ligne ne gère qu'une page à la fois : passe ces règlements l'un après l'autre, ou écris-nous à contact@slayering.com pour qu'on te génère un lien groupé."
+      );
+    }
   });
+
+  initCookieConsent();
 });
+
+/* =============================================================
+   Cookie consent — bandeau + chargement conditionnel de l'analytics
+   ============================================================= */
+const COOKIE_CONSENT_KEY = "slayering_cookie_consent"; // "accepted" | "declined"
+
+function loadAnalytics(){
+  if (!GTM_CONTAINER_ID || window.__gtmLoaded) return;
+  window.__gtmLoaded = true;
+  window.dataLayer = window.dataLayer || [];
+  window.dataLayer.push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
+  const s = document.createElement("script");
+  s.async = true;
+  s.src = `https://www.googletagmanager.com/gtm.js?id=${GTM_CONTAINER_ID}`;
+  document.head.appendChild(s);
+}
+
+function initCookieConsent(){
+  const banner = document.getElementById("cookieBanner");
+  if (!banner) return;
+  const stored = localStorage.getItem(COOKIE_CONSENT_KEY);
+
+  if (stored === "accepted"){
+    loadAnalytics();
+  } else if (stored !== "declined"){
+    banner.hidden = false;
+  }
+
+  document.getElementById("cookieAccept")?.addEventListener("click", () => {
+    localStorage.setItem(COOKIE_CONSENT_KEY, "accepted");
+    banner.hidden = true;
+    loadAnalytics();
+  });
+  document.getElementById("cookieDecline")?.addEventListener("click", () => {
+    localStorage.setItem(COOKIE_CONSENT_KEY, "declined");
+    banner.hidden = true;
+  });
+}
