@@ -46,19 +46,17 @@ const REVIEWS = [
 ];
 
 /* =============================================================
-   PAIEMENT — Stripe Payment Links (2 liens, tarif dégressif)
+   PAIEMENT — Stripe Payment Links (1 lien par quantité, tarif dégressif)
    --------------------------------
-   Deux liens Stripe séparés sont branchés ci-dessous :
-   - STRIPE_LINK_SOLO  → tarif "1 pièce" à 22 €
-   - STRIPE_LINK_PACK2 → tarif forfaitaire "2 pièces" à 40 € (= 20 €/pièce)
-   Chaque lien facture un prix FIXE — Stripe ne calcule pas de tarif
-   dégressif arbitraire pour un one-time payment. La redirection dans
-   le handler #checkoutBtn choisit le lien selon la quantité TOTALE du
-   panier : 1 pièce → lien solo, 2 pièces → lien pack. Au-delà de 2
-   pièces, il n'existe pas de lien Stripe qui calcule le bon montant
-   automatiquement (limite de la plateforme pour du paiement ponctuel
-   sans backend) — le client est prévenu et invité à finaliser en deux
-   commandes, ou à contacter directement contact@slayering.com.
+   Un lien Stripe à tarif FIXE est branché pour chaque quantité totale de
+   1 à 10 pièces (objet STRIPE_LINKS ci-dessous). Stripe ne calcule pas de
+   tarif dégressif arbitraire pour un one-time payment sans backend, donc
+   chaque lien correspond à un montant précalculé (packBreakdown). La
+   redirection dans le handler #checkoutBtn choisit le lien selon la
+   quantité TOTALE du panier. Au-delà de 10 pièces, il n'existe pas de
+   lien Stripe qui calcule le bon montant automatiquement — le client est
+   prévenu et invité à finaliser en plusieurs commandes, ou à contacter
+   directement contact@slayering.com.
    Pour créer/modifier un lien : dashboard Stripe → Catalogue de
    produits → tarif concerné → "..." → "Créer un lien de paiement".
    Pense à cocher "Collecter les adresses des clients" (produit
@@ -91,11 +89,22 @@ const FORMSPREE_ENDPOINT = ""; // ex: "https://formspree.io/f/xxxxabcd"
    ============================================================= */
 const GTM_CONTAINER_ID = "GTM-WFT6JKG5";
 
-// Deux liens Stripe distincts (un tarif fixe par lien, ils ne s'ajustent pas
-// automatiquement à une quantité arbitraire — voir logique de redirection
-// dans le handler #checkoutBtn plus bas).
-const STRIPE_LINK_SOLO = "https://buy.stripe.com/fZu5kFb9h5TPgv1br4ds401"; // 1 pièce — 22 €
-const STRIPE_LINK_PACK2 = "https://buy.stripe.com/7sY00lfpxbe9fqX1Quds402"; // 2 pièces — 40 € (forfait)
+// Un lien Stripe à tarif FIXE par quantité totale de 1 à 10 pièces (au-delà,
+// pas de lien qui corresponde automatiquement — voir logique de redirection
+// dans le handler #checkoutBtn plus bas). Chaque montant correspond au tarif
+// dégressif (packBreakdown) : 22€/pièce solo, 20€/pièce en pack de 2.
+const STRIPE_LINKS = {
+  1:  "https://buy.stripe.com/fZu5kFb9h5TPgv1br4ds401", // 22 €
+  2:  "https://buy.stripe.com/7sY00lfpxbe9fqX1Quds402", // 40 €
+  3:  "https://buy.stripe.com/6oU4gB7X5fup2Ebbr4ds403", // 62 €
+  4:  "https://buy.stripe.com/fZufZj0uDgyt4Mj1Quds404", // 80 €
+  5:  "https://buy.stripe.com/14A7sN6T1dmh5Qn8eSds405", // 102 €
+  6:  "https://buy.stripe.com/bJe28tfpxeqlemT0Mqds406", // 120 €
+  7:  "https://buy.stripe.com/28E3cxdhp0zv7Yv9iWds407", // 142 €
+  8:  "https://buy.stripe.com/28EcN7dhpgyt0w38eSds408", // 160 €
+  9:  "https://buy.stripe.com/14A8wRb9h6XT4Mj7aOds409", // 182 €
+  10: "https://buy.stripe.com/cNi00la5d6XTgv1br4ds40a", // 200 €
+};
 
 /* =============================================================
    State
@@ -672,8 +681,8 @@ document.addEventListener("DOMContentLoaded", () => {
     if (state.cart.length === 0) return;
     const qty = totalQty();
 
-    if (!STRIPE_LINK_SOLO || !STRIPE_LINK_PACK2){
-      showToast("Paiement à configurer", "Ajoute tes liens Stripe dans script.js (constantes STRIPE_LINK_SOLO / STRIPE_LINK_PACK2).");
+    if (Object.keys(STRIPE_LINKS).length === 0){
+      showToast("Paiement à configurer", "Ajoute tes liens Stripe dans script.js (objet STRIPE_LINKS).");
       return;
     }
 
@@ -685,15 +694,14 @@ document.addEventListener("DOMContentLoaded", () => {
     // sert pour transmettre automatiquement le(s) coloris + quantité choisis,
     // sans backend. Ema les verra directement sur le paiement à préparer.
     const refId = cartReferenceId();
+    const link = STRIPE_LINKS[qty];
 
-    if (qty === 1){
-      window.location.href = withClientReference(STRIPE_LINK_SOLO, refId);
-    } else if (qty === 2){
-      window.location.href = withClientReference(STRIPE_LINK_PACK2, refId);
+    if (link){
+      window.location.href = withClientReference(link, refId);
     } else {
-      // Au-delà de 2 pièces : chaque lien Stripe est un tarif fixe pour
-      // une quantité fixe, donc une seule page de paiement ne peut pas
-      // couvrir une combinaison. On explique clairement au client quoi
+      // Au-delà de la plus grande quantité couverte par un lien Stripe à
+      // tarif fixe : une seule page de paiement ne peut pas couvrir une
+      // combinaison arbitraire. On explique clairement au client quoi
       // régler, dans quel ordre, plutôt que de le laisser deviner.
       const { packs, packUnit, remainder, soloUnit } = packBreakdown(qty);
       const steps = [];
