@@ -334,7 +334,7 @@ ul{list-style:none;margin:0;padding:0;}
   letter-spacing:-.01em;
 }
 .hero__title span{ display:block; }
-.hero__title .ghost{ color:var(--ink-faint); }
+.hero__title .ghost{ color:var(--ink-dim); }
 .hero__sub{
   font-family:var(--serif);
   font-weight:600;
@@ -712,48 +712,49 @@ ul{list-style:none;margin:0;padding:0;}
 /* Footer */
 .footer{ border-top:1px solid var(--line-soft); padding:4.5rem 0 8rem; }
 .footer__grid{
-  display:grid;
-  grid-template-columns:1.4fr 1fr;
-  gap:2.5rem;
+  display:flex;
+  justify-content:center;
   margin-bottom:3rem;
-  text-align:left;
+  text-align:center;
 }
-@media (max-width:720px){ .footer__grid{ grid-template-columns:1fr; } }
-.footer__brand{ display:flex; flex-direction:column; align-items:flex-start; }
+.footer__brand{ display:flex; flex-direction:column; align-items:center; }
 .footer__brand p{ color:var(--ink-dim); margin-top:.7rem; max-width:28ch; }
 .footer__col{ display:flex; flex-direction:column; align-items:flex-start; gap:.7rem; }
 .footer__col a:hover{ color:var(--accent); }
 .footer__bottom{
-  display:flex; justify-content:center; flex-wrap:wrap; gap:1.5rem;
+  display:flex; justify-content:center; align-items:baseline; flex-wrap:wrap;
+  gap:.5rem 1.3rem;
   padding-top:2rem;
   border-top:1px solid var(--line-soft);
   font-family:var(--mono);
   font-size:.72rem;
   color:var(--ink-faint);
 }
-/* Liens légaux discrets : tout en bas, même rendu que du texte courant,
-   pas de soulignement ni de couleur distinctive par défaut — on ne veut
-   pas que ça saute aux yeux comme un vrai menu, juste être accessible
-   pour qui cherche. Un léger soulignement au survol/focus reste présent
-   pour l'accessibilité (un lien doit rester repérable autrement que par
-   la seule couleur). */
 .footer__legal{
   display:flex; justify-content:center; flex-wrap:wrap;
-  gap:.6rem 1.1rem;
-  margin-top:.9rem;
-  font-family:var(--mono);
-  font-size:.62rem;
-  color:var(--ink-faint);
-  opacity:.55;
+  gap:.5rem 1.3rem;
 }
-.footer__legal a{
+/* Sur ordinateur, les liens légaux restent sur la même ligne que le
+   copyright (ci-dessus, ils font partie du même flex row et s'y insèrent
+   naturellement). Sur tablette/téléphone, on les bascule explicitement
+   sur leur propre ligne en dessous plutôt que de laisser un retour à la
+   ligne au milieu des liens, moins net visuellement. */
+@media (max-width:720px){
+  .footer__bottom{ flex-direction:column; align-items:center; gap:.6rem; }
+}
+/* Liens légaux collés à la ligne de copyright, même typo, aucun style
+   distinctif — jamais de soulignement, même au survol, pour ne pas
+   ressembler à un vrai menu. Un contour discret au focus clavier reste
+   présent (invisible à la souris) : un lien doit rester repérable
+   autrement que par la seule couleur pour la navigation au clavier. */
+.footer__bottom a{
   color:inherit;
   text-decoration:none;
 }
-.footer__legal a:hover,
-.footer__legal a:focus-visible{
-  text-decoration:underline;
-  opacity:1;
+.footer__bottom a:focus-visible{
+  outline:1px solid var(--ink-dim);
+  outline-offset:3px;
+  border-radius:2px;
 }
 
 /* =============================================================
